@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2),
     display: 'flex',
     background: '#efefef',
-    file: null,
   },
 }));
 
@@ -28,7 +27,6 @@ const defaultState = {
 |                    |
 |                    |
 ----------------------`
-
 };
 
 function App() {
@@ -36,9 +34,7 @@ function App() {
   const classes = useStyles();
 
   reader.onload = () => {
-    console.log(state, reader.result);
     setState( { ...state, instructions: reader.result });
-    console.log(state, reader.result);
   };
 
   const handleInputChange = e => {
@@ -48,15 +44,31 @@ function App() {
   };
 
   const handleFileLoad = (file, e) => {
-    console.log(file[0], e.nativeEvent);
-    setState({ ...state, file: file[0] });
     reader.readAsText(file[0]);
+
     e.nativeEvent.target.value = '';
   };
 
+  const handleSaveFile = () => {
+    const file = new Blob([state.display], {type: 'txt'});
+
+    const a = document.createElement("a"),
+
+    url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = 'output';
+    document.body.appendChild(a);
+    a.click();
+
+    setTimeout(function() {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+
   const handleRun = () => {
-    console.log(state.instructions);
     const result = compilator.compile(state.instructions);
+
     setState({...state, display: result ? result : 'Render error'});
   };
 
@@ -67,7 +79,8 @@ function App() {
                       handleInputChange={handleInputChange}
                       handleRun={handleRun}
                       instructions={state.instructions}/>
-        <OutputSection display={state.display}/>
+        <OutputSection display={state.display}
+                       handleSaveFile={handleSaveFile}/>
       </Paper>
     </div>
 

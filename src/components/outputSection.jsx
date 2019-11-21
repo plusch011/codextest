@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,19 +15,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function OutputSection({ display }) {
+export default function OutputSection({ display, handleSaveFile }) {
   const classes = useStyles();
 
   return (
     <div className='output-section'>
+
       <div className='output-buttons'>
         <Button
+          onClick={handleSaveFile}
           variant="outlined"
           color="primary"
           className={classes.button}>
           Save to File.txt
         </Button>
       </div>
+
       <TextField
         disabled
         id="outlined-multiline-static"
@@ -39,6 +42,7 @@ export default function OutputSection({ display }) {
         variant="outlined"
         value={ display }
       />
+
     </div>
   );
 }

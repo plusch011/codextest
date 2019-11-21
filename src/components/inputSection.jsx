@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import InputFiles from 'react-input-files';
@@ -23,6 +23,7 @@ export default function InputSection({ handleInputChange, handleFileLoad, instru
 
   return (
     <div className='input-section'>
+
       <div className='input-buttons'>
         <InputFiles
           onChange={handleFileLoad}
@@ -34,7 +35,6 @@ export default function InputSection({ handleInputChange, handleFileLoad, instru
             Load instructions
           </Button>
         </InputFiles>
-
         <Button
           onClick={handleRun}
           variant="outlined"
@@ -43,6 +43,7 @@ export default function InputSection({ handleInputChange, handleFileLoad, instru
           Run
         </Button>
       </div>
+
       <TextField
         id="outlined-multiline-static"
         label="Instructions"
@@ -55,6 +56,7 @@ export default function InputSection({ handleInputChange, handleFileLoad, instru
         onChange={handleInputChange}
       >
       </TextField>
+
     </div>
   );
 }

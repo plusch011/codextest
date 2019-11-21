@@ -15,8 +15,8 @@ export default class Compilator {
     const args = instruction.slice(1);
     switch(instruction[0]) {
       case 'C':
-        const arggs = [...args.map(x => +x)];
-        this.draw.createCanvas(...arggs);
+        this.draw.createCanvas(...args.map(x => +x));
+
         return this.draw.render();
         break;
 
@@ -24,7 +24,9 @@ export default class Compilator {
         if(!this.draw.cnv) {
           return 'Error: cnv doesnt exists';
         }
+
         this.draw.line(...args.map(x => +x));
+
         return this.draw.render();
         break;
 
@@ -32,7 +34,9 @@ export default class Compilator {
         if(!this.draw.cnv) {
           return 'Error: cnv doesnt exists';
         }
+
         this.draw.rectangle(...args.map(x => +x));
+
         return this.draw.render();
         break;
 
@@ -40,9 +44,12 @@ export default class Compilator {
         if(!this.draw.cnv) {
           return 'Error: cnv doesnt exists';
         }
+
         this.draw.bucketFill(+args[0], +args[1], args[2]);
+
         return this.draw.render();
         break;
+
       case '':
         return '';
 
@@ -53,9 +60,12 @@ export default class Compilator {
 
   compile(str) {
     this.parseString(str);
+
     const result = this.instructions
       .reduce((result, instruction) => `${result}${this.perform(instruction)}`, '');
+
     this.draw.cnv = null;
+
     return result;
   }
 }
