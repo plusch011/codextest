@@ -1,5 +1,11 @@
 .App {
+  width: 100vw;
+  height: 100vh;
   text-align: center;
+  background: #dedede;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -19,4 +25,27 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  width: 290px;
+}
+
+.output-section {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
+  width: 600px;
+}
+
+.input-buttons,
+.output-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.output-buttons {
+  justify-content: flex-end;
 }
