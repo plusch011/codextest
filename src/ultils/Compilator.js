@@ -22,7 +22,7 @@ export default class Compilator {
 
       case 'L':
         if(!this.draw.cnv) {
-          return 'Error: cnv doesnt exists';
+          return 'Error: Canvas doesnt exists';
         }
 
         this.draw.line(...args.map(x => +x));
@@ -32,7 +32,7 @@ export default class Compilator {
 
       case 'R':
         if(!this.draw.cnv) {
-          return 'Error: cnv doesnt exists';
+          return 'Error: Canvas doesnt exists';
         }
 
         this.draw.rectangle(...args.map(x => +x));
@@ -42,7 +42,7 @@ export default class Compilator {
 
       case 'B':
         if(!this.draw.cnv) {
-          return 'Error: cnv doesnt exists';
+          return 'Error: Canvas doesnt exists';
         }
 
         this.draw.bucketFill(+args[0], +args[1], args[2]);
@@ -54,7 +54,7 @@ export default class Compilator {
         return '';
 
       default:
-        return 'Argument Error';
+        return 'Wrong command!';
     }
   }
 

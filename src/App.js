@@ -5,9 +5,10 @@ import OutputSection from "./components/outputSection";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Compilator from './ultils/Compilator';
+import FileManager from "./ultils/FileManager";
 
-const reader = new FileReader();
 const compilator = new Compilator();
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,10 +19,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const defaultState = {
-  input: null,
-  output: null,
   instructions: 'C 20 4',
-  display: `----------------------
+  display:
+`----------------------
 |                    |
 |                    |
 |                    |
@@ -30,12 +30,13 @@ const defaultState = {
 };
 
 function App() {
-  const [ state, setState ] = useState(defaultState);
   const classes = useStyles();
 
-  reader.onload = () => {
-    setState( { ...state, instructions: reader.result });
-  };
+  const [ state, setState ] = useState(defaultState);
+
+  const fileManager = new FileManager(() => {
+    setState( { ...state, instructions: fileManager.result });
+  });
 
   const handleInputChange = e => {
     const instructions = e.nativeEvent.target.value;
@@ -44,27 +45,14 @@ function App() {
   };
 
   const handleFileLoad = (file, e) => {
-    reader.readAsText(file[0]);
+    fileManager.readAsText(file[0]);
 
     e.nativeEvent.target.value = '';
   };
 
   const handleSaveFile = () => {
-    const file = new Blob([state.display], {type: 'txt'});
-
-    const a = document.createElement("a"),
-
-    url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = 'output';
-    document.body.appendChild(a);
-    a.click();
-
-    setTimeout(function() {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
+    fileManager.saveFileAsTxt(state.display);
+  };
 
   const handleRun = () => {
     const result = compilator.compile(state.instructions);
